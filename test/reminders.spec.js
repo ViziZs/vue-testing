@@ -26,4 +26,18 @@ describe ('Reminders', () => {
         expect(wrapper.contains('ul')).toBe(true);
         expect(wrapper.find('ul').text()).toContain('Go to the store')
     })
+
+    it ('can remove any reminder', async () => {
+        await wrapper.setData({
+            reminders: [
+                'Go to the store',
+                'Do the homework',
+                'Chill'
+            ]
+        })
+
+        await wrapper.find('ul > li:first-child .remove-reminder').trigger('click')
+
+        expect(wrapper.find('ul').text()).not.toContain('Go to the store')
+    })
 })
