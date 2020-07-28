@@ -1,6 +1,7 @@
 import {mount} from "@vue/test-utils";
-import expect from 'expect';
+import expect from "expect";
 import QuestionComponent from "../src/components/QuestionComponent.vue";
+import moxios from "moxios";
 
 describe ('Question', () => {
     let wrapper
@@ -14,6 +15,11 @@ describe ('Question', () => {
                 }
             }
         })
+        moxios.install()
+    })
+
+    afterEach(() => {
+        moxios.uninstall()
     })
 
     it ('displays the title and the body', () => {
@@ -44,10 +50,23 @@ describe ('Question', () => {
         type('Changed title', 'input[name=title]')
         type('Changed body', 'textarea[name=body]')
 
+        moxios.stubRequest('/questions/1', {
+            status: 200,
+            response: {
+                title: 'Changed title',
+                body: 'Changed body'
+            }
+        })
+
         await click('#update')
+
+        await wrapper.vm.$nextTick()
+        await wrapper.vm.$nextTick()
 
         see('Changed title')
         see('Changed body')
+
+        see('Question updated')
     })
 
     it ('can cancel out of edit mode', async () => {
