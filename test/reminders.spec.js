@@ -10,11 +10,11 @@ describe ('Reminders', () => {
     })
 
     it ('hides the reminders list if there are none', () => {
-        expect(wrapper.contains('ul')).toBe(false);
+        expect(wrapper.find('ul').exists()).toBe(false);
     })
 
     it ('can add reminders', async () => {
-        expect(wrapper.contains('ul')).toBe(false);
+        expect(wrapper.find('ul').exists()).toBe(false);
 
         let newReminder = wrapper.find('.new-reminder')
 
@@ -23,7 +23,7 @@ describe ('Reminders', () => {
 
         await wrapper.find('button').trigger('click')
 
-        expect(wrapper.contains('ul')).toBe(true);
+        expect(wrapper.find('ul').exists()).toBe(true);
         expect(wrapper.find('ul').text()).toContain('Go to the store')
     })
 
