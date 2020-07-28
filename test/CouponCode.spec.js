@@ -10,7 +10,7 @@ describe ('CouponCode', () => {
     })
 
     it ('accepts a coupon code', () => {
-        expect(wrapper.contains('input.coupon-code')).toBe(true)
+        expect(wrapper.find('input.coupon-code').exists()).toBe(true)
     })
 
     it ('validates a real coupon code', async () => {
